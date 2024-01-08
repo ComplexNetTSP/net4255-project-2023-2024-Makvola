@@ -1,14 +1,20 @@
 from flask import Flask, render_template, request
 from pymongo import MongoClient
 from datetime import datetime
+import os
 
 app = Flask(__name__)
-client = MongoClient('mongodb://mongodb:27017/')  
+mongo_host = os.environ.get('MONGO_HOST', 'mongodb')
+mongo_port = int(os.environ.get('MONGO_PORT', 27017))
+database_name = os.environ.get('DATABASE_NAME', 'your_database')
+
+client = MongoClient(host=mongo_host, port=mongo_port)
+db = client[database_name]
 
 @app.route("/")
 def hello_world():
     # Récupérez les 10 derniers enregistrements depuis la base de données
-    records = list(client.your_database.records.find().sort('_id', -1).limit(10))
+    records = list(db.records.find().sort('_id', -1).limit(10))
 
     # Préparez les données pour l'affichage
     display_data = [{'ip_address': record['ip_address'], 'timestamp': record['timestamp']} for record in records]
@@ -23,7 +29,7 @@ def before_request():
     current_date = datetime.now()
 
     # Enregistrez les informations dans la base de données MongoDB
-    client.your_database.records.insert_one({
+    db.records.insert_one({
         'ip_address': client_ip,
         'timestamp': current_date
     })
