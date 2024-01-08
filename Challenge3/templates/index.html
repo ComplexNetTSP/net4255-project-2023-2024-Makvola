@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <title>Projet Flask</title>
+    <script>
+        // Fonction pour afficher la date du jour
+        function afficherDateDuJour() {
+            var dateDuJour = new Date();
+            var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            var dateString = dateDuJour.toLocaleDateString('fr-FR', options);
+            document.getElementById('dateDuJour').innerText = "Date du jour : " + dateString;
+        }
+        window.onload = afficherDateDuJour;
+    </script>
+</head>
+<body>
+    <h1>Nom et prénom : GABA Maktoum</h1>
+    <h1>Nom de projet : Projet_NET</h1>
+    <h1>Version : V2</h1>
+    <h1 id="dateDuJour"></h1>
+    <h1>Last 10 Records</h1>
+    <ul>
+        {% for record in records %}
+            <li>{{ record.ip_address }} - {{ record.timestamp }}</li>
+        {% endfor %}
+    </ul>
+</body>
+</html>
