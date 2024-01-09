@@ -1,0 +1,47 @@
+version: '3'
+
+services:
+  flask-app-1:
+    image: flask-app:latest
+    ports:
+      - '5001:5000'
+    depends_on:
+      - mongodb
+    networks:
+      - my_network
+
+  flask-app-2:
+    image: challeng_3_flask-app:latest
+    ports:
+      - "5002:5000"
+    depends_on:
+      - mongodb
+    environment:
+      MONGO_HOST: mongodb
+      MONGO_PORT: 27017
+      DATABASE_NAME: your_database2
+    networks:
+      - my_network
+
+  nginx:
+    image: nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - flask-app-1
+      - flask-app-2
+    networks:
+      - my_network
+
+  mongodb:
+    image: mongo
+    ports:
+      - "27017:27017"
+    networks:
+      - my_network
+
+networks:
+  my_network:
+    driver: bridge
