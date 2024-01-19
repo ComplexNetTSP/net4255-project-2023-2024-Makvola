@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webnodb-deployment
+  namespace: maktoumg
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: webnodb
+  template:
+    metadata:
+      labels:
+        app: webnodb
+    spec:
+      containers:
+      - name: flask-app-1
+        image: makvola/flask-app:latest
+        ports:
+        - containerPort: 5000
