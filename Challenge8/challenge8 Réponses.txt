@@ -1,0 +1,5 @@
+ClusterIP :
+Ce type de service expose le service uniquement à l'intérieur du cluster. Il attribue une adresse IP interne fixe au service, et les autres services au sein du cluster peuvent y accéder en utilisant cette adresse IP.
+
+NodePort :
+Ce type de service expose le service à l'extérieur du cluster en attribuant un port fixe sur tous les nœuds du cluster.L'application peut être accessible depuis l'extérieur du cluster en utilisant l'adresse IP du nœud et le port spécifié.
